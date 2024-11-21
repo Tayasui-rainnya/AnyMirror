@@ -193,8 +193,6 @@ console.log("ELEMENT PROPERTY (new Proxy) INJECTED");
 }
 
 
-
-
 //---***========================================***---注入location---***========================================***---
 class ProxyLocation {
 constructor(originalLocation) {
@@ -343,13 +341,6 @@ console.log("WINDOW LOCATION INJECTED");
 }
 
 
-
-
-
-
-
-
-
 //---***========================================***---注入历史---***========================================***---
 function historyInject(){
 const originalPushState = History.prototype.pushState;
@@ -379,10 +370,6 @@ History.prototype.go = function (delta) {
 
 console.log("HISTORY INJECTED");
 }
-
-
-
-
 
 
 //---***========================================***---Hook观察界面---***========================================***---
@@ -458,28 +445,7 @@ for (var i = 0; i < scripts.length; i++) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 小朋友你为什么要留这么多的空呀？
 
 
 
@@ -655,7 +621,7 @@ const mainPage = `
 <li>若显示 400 Bad Request 错误，请清除浏览器 Cookie。</li>
 <li>不能保证所有网页的功能或渲染正常。</li>
 <li><strong>任何时候都不应该在镜像页面中登录账号。</strong></li>
-<li>
+<li><!--- 哦吼吼吼自动填充什么的真是太棒了 --->
     常用网站镜像：
     <a onclick="fillUrl('https://wikipedia.com/')">Wikipedia</a> |
     <a onclick="fillUrl('https://github.com/')">GitHub</a> |
@@ -742,10 +708,10 @@ async function handleRequest(request) {
       }
 
   }
-
+// 整个 cf 的图标
   const url = new URL(request.url);
   if(request.url.endsWith("favicon.ico")){
-      return Response.redirect("https://www.baidu.com/favicon.ico", 301);
+      return Response.redirect("https://www.cloudflare-cn.com/favicon.ico", 301);
   }
   if(request.url.endsWith("robots.txt")){
       return getHTMLResponse(`
