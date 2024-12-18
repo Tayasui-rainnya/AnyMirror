@@ -22,21 +22,21 @@ const proxyHintInjection = `
 //---***========================================***---提示使用代理---***========================================***---
 
 setTimeout(() => {
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  var hint = \`Warning: 您当前正在使用网络代理，原始链接为 \${window.location.pathname} ,请勿登录任何网站。单击关闭此提示。\`;
-  console.log(1);
-  document.body.insertAdjacentHTML(
-    'afterbegin', 
-    \`<div style="position:fixed;left:0px;top:0px;width:100%;margin:0px;padding:0px;z-index:9999999999999999999;user-select:none;cursor:pointer;" id="__PROXY_HINT_DIV__" onclick="document.getElementById('__PROXY_HINT_DIV__').remove();">
-      <span style="position:absolute;width:100%;min-height:20px;font-size:15px;color:Red;background:rgb(0,0,0,0.5);text-align:center;border:var(--borderWidth-thin) solid #8c93fb;border-radius:15px;";backdrop-filter:blur(3px);box-shadow: 0 8px rgba(0,0,0,0.3);>
-        \${hint}
-      </span>
-    </div>\`    
-  );
-}else{
-  alert(\`Warning: You are currently using a web proxy, the original link is \${window.location.pathname}. Please note that you are using a proxy, and do not log in to any website.\`);
-}
-}, 3000);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    var hint = \`Warning: 您当前正在使用网络代理，原始链接为 \${window.location.pathname} ,请勿登录任何网站。单击关闭此提示。\`;
+    console.log(1);
+    document.body.insertAdjacentHTML(
+      'afterbegin', 
+      \`<div style="position:fixed;left:0px;top:0px;width:100%;margin:0px;padding:0px;z-index:9999999999999999999;user-select:none;cursor:pointer;" id="__PROXY_HINT_DIV__" onclick="document.getElementById('__PROXY_HINT_DIV__').remove();">
+        <span style="position:absolute;width:100%;min-height:20px;font-size:15px;color:Red;background:rgb(0,0,0,0.5);text-align:center;border:var(--borderWidth-thin) solid #8c93fb;border-radius:15px;";backdrop-filter:blur(3px);box-shadow: 0 8px rgba(0,0,0,0.3);>
+          \${hint}
+        </span>
+      </div>\`    
+    );
+  }else{
+    alert(\`Warning: You are currently using a web proxy, the original link is \${window.location.pathname}. Please note that you are using a proxy, and do not log in to any website.\`);
+  }
+  }, 3000);
 
 `;
 const httpRequestInjection = `
@@ -508,62 +508,68 @@ console.log("WINDOW CORS ERROR EVENT ADDED");
 
 `;
 const mainPage = `
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>AnyMirror</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+        }
+
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            padding: 0 10%;
+            justify-content: flex-start; /* 内容从顶部开始 */
+            padding: 10px;
         }
 
         .container {
-            text-align: center;
-            background-color: #f7f7f7;
+            background-color: #fff;
             padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px 0; /* 避免顶部溢出 */
         }
 
         h1 {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-
-        form {
-            max-width: 340px;
-            margin: 0 auto;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
 
         input[type="text"] {
+            width: 100%;
             padding: 10px;
-            font-size: 15px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
+            font-size: 14px;
             box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 16px;
+
         }
 
         button {
-            padding: 9px 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
             background-color: #008cba;
             color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
         }
 
         button:hover {
@@ -571,11 +577,12 @@ const mainPage = `
         }
 
         ul {
-            font-size: 15px;
             margin-top: 20px;
-            list-style: none;
-            padding: 0;
+            list-style-type: none;
+            font-size: 14px;
             text-align: left;
+            width: 100%;
+            max-width: 400px;
         }
 
         li {
@@ -584,13 +591,30 @@ const mainPage = `
 
         a {
             color: #008cba;
-            font-size: 14px;
             text-decoration: none;
-            cursor: pointer;
         }
 
         a:hover {
             text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                justify-content: flex-start; /* 确保顶部不会溢出 */
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 15px;
+                margin-top: 10px; /* 调整顶部间距 */
+            }
         }
     </style>
 </head>
@@ -642,9 +666,12 @@ const mainPage = `
     document.getElementById('targetUrl').value = url;
 }
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "abfc776920154dbe827cbf323cf21358"}'>
+</script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
 `;
 const pwdPage = `
 <!DOCTYPE html>
